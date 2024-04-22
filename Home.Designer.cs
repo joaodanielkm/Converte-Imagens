@@ -30,6 +30,7 @@
         {
             chkMantenhaProporcao = new CheckBox();
             btnConvertaFotos = new Button();
+            txtQualidade = new TextBox();
             SuspendLayout();
             // 
             // chkMantenhaProporcao
@@ -52,11 +53,21 @@
             btnConvertaFotos.UseVisualStyleBackColor = true;
             btnConvertaFotos.Click += BtnConvertaFotos_Click;
             // 
+            // txtQualidade
+            // 
+            txtQualidade.Location = new Point(366, 204);
+            txtQualidade.Name = "txtQualidade";
+            txtQualidade.Size = new Size(100, 23);
+            txtQualidade.TabIndex = 2;
+            txtQualidade.Text = "90";
+            txtQualidade.TextAlign = HorizontalAlignment.Center;
+            // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(txtQualidade);
             Controls.Add(btnConvertaFotos);
             Controls.Add(chkMantenhaProporcao);
             Name = "Home";
@@ -69,5 +80,6 @@
 
         private CheckBox chkMantenhaProporcao;
         private Button btnConvertaFotos;
+        private TextBox txtQualidade;
     }
 }

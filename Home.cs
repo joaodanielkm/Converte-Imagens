@@ -28,6 +28,7 @@ namespace ConverteFotos
                     using Image imagemOriginal = Image.FromFile(arquivo);
                     int novaLargura = 800;
                     int novaAltura = 1200;
+
                     bool ehParaManterProporcao = chkMantenhaProporcao.Checked;
 
                     if (ehParaManterProporcao)
@@ -37,7 +38,9 @@ namespace ConverteFotos
 
                     using Image novaImagem = new Bitmap(imagemOriginal, novaLargura, novaAltura);
                     EncoderParameters parametros = new(count: 1);
-                    long qualidade = 90L;
+
+                    long qualidade = string.IsNullOrEmpty(txtQualidade.Text) ? 90L : Convert.ToInt32(txtQualidade.Text);
+
                     parametros.Param[0] = new EncoderParameter(Encoder.Quality, qualidade);
                     ImageCodecInfo? codecInfo = ObtenhaCodec(Path.GetExtension(arquivo));
 
