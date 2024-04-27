@@ -1,12 +1,23 @@
 using System.Drawing.Imaging;
+using System.Security;
 
 namespace ConverteFotos
 {
     public partial class Home : Form
     {
+        private OpenFileDialog openFileDialog;
+
         public Home()
         {
             InitializeComponent();
+            SelecioneImagens();
+        }
+
+        private void SelecioneImagens()
+        {
+            openFileDialog = new OpenFileDialog();
+            Controls.Add(btnSelecioneImagens);
+            Controls.Add(txtImagens);
         }
 
         private void ConverteFotos()
@@ -81,5 +92,26 @@ namespace ConverteFotos
         {
             ConverteFotos();
         }
+
+        private void BtnSelecioneImagens_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var sr = new StreamReader(openFileDialog.FileName);
+                    SetTextoImagens(sr.ReadToEnd());
+                }
+                catch (SecurityException ex)
+                {
+                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+                }
+            }
+        }
+
+        private void SetTextoImagens(string textoImagens) => txtImagens.Text = textoImagens;
+
+        private void BtnFechar_Click(object sender, EventArgs e) => Close();
     }
 }
