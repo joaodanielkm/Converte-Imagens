@@ -17,21 +17,45 @@ namespace ConverteFotos
         private void SelecioneImagens()
         {
             openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
             Controls.Add(btnSelecioneImagens);
             Controls.Add(txtImagens);
         }
 
+        private void BtnSelecioneImagens_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    txtImagens.Clear();
+                    System.Text.StringBuilder sb = new();
+                    _pastaOrigem = Path.GetDirectoryName(openFileDialog.FileName);//todos da pasta
+                    foreach (var imagem in openFileDialog.SafeFileNames)
+                    {
+                        sb.AppendLine(imagem);
+                    }
+                    txtImagens.Text = sb.ToString();
+                }
+                catch (SecurityException ex)
+                {
+                    MessageBox.Show(@$"Erro ao selecionar imagem {ex.Message}
+                    Detalhe:
+                    {ex.StackTrace}");
+                }
+            }
+        }
+
         private void ConverteFotos()
         {
-            string pastaOrigem = @"C:\Users\User\Pictures\Screenshots";
-            string pastaDestino = @"C:\Users\User\Pictures\Screenshots\Convertidas";
+            string pastaDestino = @$"{_pastaOrigem}\ImagensConvertidas";
 
             if (!Directory.Exists(pastaDestino))
             {
                 Directory.CreateDirectory(pastaDestino);
             }
 
-            string[] arquivos = Directory.GetFiles(pastaOrigem);
+            string[] arquivos = openFileDialog.FileNames;
 
             foreach (string arquivo in arquivos)
             {
@@ -94,24 +118,6 @@ namespace ConverteFotos
             ConverteFotos();
         }
 
-        private void BtnSelecioneImagens_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    var sr = new StreamReader(openFileDialog.FileName);
-                    txtImagens.Text = sr.ReadToEnd();
-                }
-                catch (SecurityException ex)
-                {
-                    MessageBox.Show(@$"Erro ao selecionar imagem {ex.Message}
-                    Detalhe:
-                    {ex.StackTrace}");
-                }
-            }
-        }
-
         private void BtnFechar_Click(object sender, EventArgs e) => Close();
 
         private void ChkMantenhaProporcao_CheckStateChanged(object sender, EventArgs e)
@@ -119,5 +125,7 @@ namespace ConverteFotos
             txtAltura.Enabled = !chkMantenhaProporcao.Checked;
             txtLargura.Enabled = !chkMantenhaProporcao.Checked;
         }
+
+        private void btnLimpar_Click(object sender, EventArgs e) => txtImagens.Clear();
     }
 }

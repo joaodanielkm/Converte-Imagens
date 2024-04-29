@@ -39,6 +39,7 @@
             txtLargura = new TextBox();
             label2 = new Label();
             label3 = new Label();
+            btnLimpar = new Button();
             SuspendLayout();
             // 
             // chkMantenhaProporcao
@@ -66,7 +67,7 @@
             // 
             // txtQualidade
             // 
-            txtQualidade.Location = new Point(400, 271);
+            txtQualidade.Location = new Point(402, 271);
             txtQualidade.Name = "txtQualidade";
             txtQualidade.Size = new Size(51, 23);
             txtQualidade.TabIndex = 2;
@@ -103,7 +104,7 @@
             // 
             // btnFechar
             // 
-            btnFechar.Location = new Point(332, 54);
+            btnFechar.Location = new Point(332, 96);
             btnFechar.Name = "btnFechar";
             btnFechar.Size = new Size(121, 36);
             btnFechar.TabIndex = 7;
@@ -149,6 +150,16 @@
             label3.TabIndex = 11;
             label3.Text = "Largura";
             // 
+            // btnLimpar
+            // 
+            btnLimpar.Location = new Point(332, 54);
+            btnLimpar.Name = "btnLimpar";
+            btnLimpar.Size = new Size(121, 36);
+            btnLimpar.TabIndex = 12;
+            btnLimpar.Text = "Limpar";
+            btnLimpar.UseVisualStyleBackColor = true;
+            btnLimpar.Click += btnLimpar_Click;
+            // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -156,6 +167,7 @@
             AutoSize = true;
             ClientSize = new Size(463, 364);
             ControlBox = false;
+            Controls.Add(btnLimpar);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(txtLargura);
@@ -187,5 +199,6 @@
         private TextBox txtLargura;
         private Label label2;
         private Label label3;
+        private Button btnLimpar;
     }
 }
