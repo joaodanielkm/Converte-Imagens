@@ -8,6 +8,8 @@ namespace ConverteFotos
     public partial class Home : Form
     {
         private readonly OpenFileDialog? _openFileDialog;
+        private string? _pastaOrigem;
+        private long _tamanhoTotalMB;
 
         public Home()
         {
@@ -24,14 +26,19 @@ namespace ConverteFotos
             {
                 try
                 {
+                    long tamanhoTotalBytes = 0;
                     txtImagens.Clear();
                     System.Text.StringBuilder sb = new();
+                    _pastaOrigem = Path.GetDirectoryName(_openFileDialog?.FileName);
 
-                    foreach (var imagem in _openFileDialog.SafeFileNames)
+                    foreach (string imagem in _openFileDialog.SafeFileNames)
                     {
                         sb.AppendLine(imagem);
+                        tamanhoTotalBytes += new FileInfo(@$"{_pastaOrigem}\{imagem}").Length;
                     }
+
                     txtImagens.Text = sb.ToString();
+                    lbTamanhoTotal.Text = $"Tamanho total: {ObtenhaStringTamanhoTotal(ObtenhaTamanhoTotal(tamanhoTotalBytes))}";
                 }
                 catch (SecurityException ex)
                 {
@@ -44,20 +51,21 @@ namespace ConverteFotos
 
         private void ConvertaImagens()
         {
-            string? pastaOrigem = Path.GetDirectoryName(_openFileDialog?.FileName);
-            string pastaDestino = @$"{pastaOrigem}\Imagens Convertidas";
+            if (string.IsNullOrEmpty(txtImagens.Text))
+            {
+                MessageBox.Show("Selecione ao menos uma imagem!");
+                return;
+            }
+
+            string pastaDestino = @$"{_pastaOrigem}\Imagens Convertidas";
+            long tamanhoTotalFinal = 0;
 
             if (!Directory.Exists(pastaDestino))
             {
                 Directory.CreateDirectory(pastaDestino);
             }
 
-            string[] arquivos = [];
-
-            if (_openFileDialog is not null)
-            {
-                arquivos = _openFileDialog.FileNames;
-            }
+            string[] arquivos = _openFileDialog.SafeFileNames;
 
             foreach (string arquivo in arquivos)
             {
@@ -86,19 +94,25 @@ namespace ConverteFotos
                     {
                         novaImagem.Save(Path.Combine(pastaDestino, Path.GetFileName(arquivo)), codecInfo, parametros);
                     }
-                    
-
                 }
+                tamanhoTotalFinal += new FileInfo(@$"{pastaDestino}\{arquivo}").Length;
             }
-            MessageBox.Show("Imagens convertidas!");
+            double diferencaoTotal = (_tamanhoTotalMB - ObtenhaTamanhoTotal(tamanhoTotalFinal));
+
+            MessageBox.Show($"Imagens convertidas!\n Ganho de {ObtenhaStringTamanhoTotal(diferencaoTotal)}");
             LimpeCampos();
             Process.Start("explorer.exe", pastaDestino);
         }
+
+        private static double ObtenhaTamanhoTotal(double tamanho) => tamanho / (1024.0 * 1024.0);
+
+        private static string ObtenhaStringTamanhoTotal(double tamanho) => tamanho < 1 ? $"{(int)(tamanho * 1024.0)} KB" : $"{tamanho:F2} MB";
 
         private void LimpeCampos()
         {
             txtImagens.Clear();
             chkMantenhaProporcao.Checked = true;
+            lbTamanhoTotal.Text = string.Empty;
         }
 
         private static bool EhImagem(string arquivo)

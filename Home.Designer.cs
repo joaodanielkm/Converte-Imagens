@@ -40,6 +40,7 @@
             label2 = new Label();
             label3 = new Label();
             btnLimpar = new Button();
+            lbTamanhoTotal = new Label();
             SuspendLayout();
             // 
             // chkMantenhaProporcao
@@ -160,6 +161,14 @@
             btnLimpar.UseVisualStyleBackColor = true;
             btnLimpar.Click += BtnLimpar_Click;
             // 
+            // lbTamanhoTotal
+            // 
+            lbTamanhoTotal.AutoSize = true;
+            lbTamanhoTotal.Location = new Point(12, 358);
+            lbTamanhoTotal.Name = "lbTamanhoTotal";
+            lbTamanhoTotal.Size = new Size(0, 15);
+            lbTamanhoTotal.TabIndex = 14;
+            // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -167,6 +176,7 @@
             AutoSize = true;
             ClientSize = new Size(463, 391);
             ControlBox = false;
+            Controls.Add(lbTamanhoTotal);
             Controls.Add(btnLimpar);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -200,5 +210,7 @@
         private Label label2;
         private Label label3;
         private Button btnLimpar;
+        private Label label4;
+        private Label lbTamanhoTotal;
     }
 }
