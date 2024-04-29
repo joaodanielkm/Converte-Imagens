@@ -17,6 +17,9 @@ namespace ConverteFotos
             {
                 Multiselect = true
             };
+            txtAltura.KeyPress += TextBox_KeyPress;
+            txtLargura.KeyPress += TextBox_KeyPress;
+            txtQualidade.KeyPress += TextBox_KeyPress;
         }
 
         private void BtnSelecioneImagens_Click(object sender, EventArgs e)
@@ -71,11 +74,15 @@ namespace ConverteFotos
             }
 
             string[] arquivos = _openFileDialog.SafeFileNames;
+            prossBar.Maximum = arquivos.Length;
 
             foreach (var (arquivo, arquivoOrigem) in from string? arquivo in arquivos
                                                      let arquivoOrigem = @$"{_pastaOrigem}\{arquivo}"
                                                      select (arquivo, arquivoOrigem))
             {
+
+                prossBar.Value++;
+
                 if (EhImagem(arquivoOrigem))
                 {
                     using Image? imagemOriginal = Image.FromFile(arquivoOrigem);
@@ -105,6 +112,7 @@ namespace ConverteFotos
 
                 tamanhoTotalFinal += new FileInfo(@$"{pastaDestino}\{arquivo}").Length;
             }
+            Thread.Sleep(1500);
 
             MessageBox.Show($"Imagens convertidas!\n Ganho de {ObtenhaStringTamanhoTotal(_tamanhoTotalMB - tamanhoTotalFinal)}");
             LimpeCampos();
@@ -125,6 +133,7 @@ namespace ConverteFotos
         private void LimpeCampos()
         {
             txtImagens.Clear();
+            prossBar.Value = 0;
             chkMantenhaProporcao.Checked = true;
             lbTamanhoTotal.Text = string.Empty;
         }
@@ -152,6 +161,14 @@ namespace ConverteFotos
             }
 
             return null;
+        }
+
+        private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
 
         private void BtnConvertaFotos_Click(object sender, EventArgs e) => ConvertaImagens();
