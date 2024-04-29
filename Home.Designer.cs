@@ -158,14 +158,14 @@
             btnLimpar.TabIndex = 12;
             btnLimpar.Text = "Limpar";
             btnLimpar.UseVisualStyleBackColor = true;
-            btnLimpar.Click += btnLimpar_Click;
+            btnLimpar.Click += BtnLimpar_Click;
             // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(463, 364);
+            ClientSize = new Size(463, 391);
             ControlBox = false;
             Controls.Add(btnLimpar);
             Controls.Add(label3);

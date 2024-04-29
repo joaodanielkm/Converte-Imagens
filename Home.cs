@@ -1,37 +1,33 @@
+using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Security;
 
 namespace ConverteFotos
 {
     public partial class Home : Form
     {
-        private OpenFileDialog openFileDialog;
-        private string _pastaOrigem = string.Empty;
+        private readonly OpenFileDialog? _openFileDialog;
 
         public Home()
         {
             InitializeComponent();
-            SelecioneImagens();
-        }
-
-        private void SelecioneImagens()
-        {
-            openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
-            Controls.Add(btnSelecioneImagens);
-            Controls.Add(txtImagens);
+            _openFileDialog = new OpenFileDialog
+            {
+                Multiselect = true
+            };
         }
 
         private void BtnSelecioneImagens_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (_openFileDialog?.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     txtImagens.Clear();
                     System.Text.StringBuilder sb = new();
-                    _pastaOrigem = Path.GetDirectoryName(openFileDialog.FileName);//todos da pasta
-                    foreach (var imagem in openFileDialog.SafeFileNames)
+
+                    foreach (var imagem in _openFileDialog.SafeFileNames)
                     {
                         sb.AppendLine(imagem);
                     }
@@ -46,22 +42,28 @@ namespace ConverteFotos
             }
         }
 
-        private void ConverteFotos()
+        private void ConvertaImagens()
         {
-            string pastaDestino = @$"{_pastaOrigem}\ImagensConvertidas";
+            string? pastaOrigem = Path.GetDirectoryName(_openFileDialog?.FileName);
+            string pastaDestino = @$"{pastaOrigem}\Imagens Convertidas";
 
             if (!Directory.Exists(pastaDestino))
             {
                 Directory.CreateDirectory(pastaDestino);
             }
 
-            string[] arquivos = openFileDialog.FileNames;
+            string[] arquivos = [];
+
+            if (_openFileDialog is not null)
+            {
+                arquivos = _openFileDialog.FileNames;
+            }
 
             foreach (string arquivo in arquivos)
             {
                 if (EhImagem(arquivo))
                 {
-                    using Image imagemOriginal = Image.FromFile(arquivo);
+                    using Image? imagemOriginal = Image.FromFile(arquivo);
                     int novaLargura = Convert.ToInt32(txtLargura.Text);
                     int novaAltura = Convert.ToInt32(txtAltura.Text);
 
@@ -84,8 +86,19 @@ namespace ConverteFotos
                     {
                         novaImagem.Save(Path.Combine(pastaDestino, Path.GetFileName(arquivo)), codecInfo, parametros);
                     }
+                    
+
                 }
             }
+            MessageBox.Show("Imagens convertidas!");
+            LimpeCampos();
+            Process.Start("explorer.exe", pastaDestino);
+        }
+
+        private void LimpeCampos()
+        {
+            txtImagens.Clear();
+            chkMantenhaProporcao.Checked = true;
         }
 
         private static bool EhImagem(string arquivo)
@@ -113,10 +126,7 @@ namespace ConverteFotos
             return null;
         }
 
-        private void BtnConvertaFotos_Click(object sender, EventArgs e)
-        {
-            ConverteFotos();
-        }
+        private void BtnConvertaFotos_Click(object sender, EventArgs e) => ConvertaImagens();
 
         private void BtnFechar_Click(object sender, EventArgs e) => Close();
 
@@ -126,6 +136,6 @@ namespace ConverteFotos
             txtLargura.Enabled = !chkMantenhaProporcao.Checked;
         }
 
-        private void btnLimpar_Click(object sender, EventArgs e) => txtImagens.Clear();
+        private void BtnLimpar_Click(object sender, EventArgs e) => LimpeCampos();
     }
 }
