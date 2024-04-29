@@ -1,6 +1,6 @@
 ﻿namespace ConverteFotos
 {
-    partial class Home
+    partial class Converter
     {
         /// <summary>
         ///  Required designer variable.
@@ -169,7 +169,7 @@
             lbTamanhoTotal.Size = new Size(0, 15);
             lbTamanhoTotal.TabIndex = 14;
             // 
-            // Home
+            // Converter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -189,7 +189,7 @@
             Controls.Add(txtQualidade);
             Controls.Add(btnConvertaFotos);
             Controls.Add(chkMantenhaProporcao);
-            Name = "Home";
+            Name = "Converter";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "home";
             ResumeLayout(false);

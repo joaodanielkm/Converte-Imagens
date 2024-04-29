@@ -13,5 +13,5 @@ C:\Users\User\source\repos\ConverteFotos\obj\Debug\net8.0-windows\refint\Convert
 C:\Users\User\source\repos\ConverteFotos\obj\Debug\net8.0-windows\ConverteFotos.pdb
 C:\Users\User\source\repos\ConverteFotos\obj\Debug\net8.0-windows\ConverteFotos.genruntimeconfig.cache
 C:\Users\User\source\repos\ConverteFotos\obj\Debug\net8.0-windows\ref\ConverteFotos.dll
-C:\Users\User\source\repos\ConverteFotos\obj\Debug\net8.0-windows\ConverteFotos.Home.resources
 C:\Users\User\source\repos\ConverteFotos\obj\Debug\net8.0-windows\ConverteFotos.sourcelink.json
+C:\Users\User\source\repos\ConverteFotos\obj\Debug\net8.0-windows\ConverteFotos.Converter.resources

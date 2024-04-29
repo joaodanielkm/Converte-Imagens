@@ -4,13 +4,13 @@ using System.Security;
 
 namespace ConverteFotos
 {
-    public partial class Home : Form
+    public partial class Converter : Form
     {
-        private readonly OpenFileDialog? _openFileDialog;
+        private readonly OpenFileDialog _openFileDialog;
         private string? _pastaOrigem;
         private long _tamanhoTotalMB;
 
-        public Home()
+        public Converter()
         {
             InitializeComponent();
             _openFileDialog = new OpenFileDialog
@@ -72,11 +72,13 @@ namespace ConverteFotos
 
             string[] arquivos = _openFileDialog.SafeFileNames;
 
-            foreach (string arquivo in arquivos)
+            foreach (var (arquivo, arquivoOrigem) in from string? arquivo in arquivos
+                                                     let arquivoOrigem = @$"{_pastaOrigem}\{arquivo}"
+                                                     select (arquivo, arquivoOrigem))
             {
-                if (EhImagem(arquivo))
+                if (EhImagem(arquivoOrigem))
                 {
-                    using Image? imagemOriginal = Image.FromFile(arquivo);
+                    using Image? imagemOriginal = Image.FromFile(arquivoOrigem);
                     int novaLargura = Convert.ToInt32(txtLargura.Text);
                     int novaAltura = Convert.ToInt32(txtAltura.Text);
 
@@ -93,15 +95,17 @@ namespace ConverteFotos
                     long qualidade = string.IsNullOrEmpty(txtQualidade.Text) ? 90L : Convert.ToInt32(txtQualidade.Text);
 
                     parametros.Param[0] = new EncoderParameter(Encoder.Quality, qualidade);
-                    ImageCodecInfo? codecInfo = ObtenhaCodec(Path.GetExtension(arquivo));
+                    ImageCodecInfo? codecInfo = ObtenhaCodec(Path.GetExtension(arquivoOrigem));
 
                     if (codecInfo is not null)
                     {
-                        novaImagem.Save(Path.Combine(pastaDestino, Path.GetFileName(arquivo)), codecInfo, parametros);
+                        novaImagem.Save(Path.Combine(pastaDestino, Path.GetFileName(arquivoOrigem)), codecInfo, parametros);
                     }
                 }
+
                 tamanhoTotalFinal += new FileInfo(@$"{pastaDestino}\{arquivo}").Length;
             }
+
             MessageBox.Show($"Imagens convertidas!\n Ganho de {ObtenhaStringTamanhoTotal(_tamanhoTotalMB - tamanhoTotalFinal)}");
             LimpeCampos();
             Process.Start("explorer.exe", pastaDestino);
