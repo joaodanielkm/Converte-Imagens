@@ -6,6 +6,7 @@ namespace ConverteFotos
     public partial class Home : Form
     {
         private OpenFileDialog openFileDialog;
+        private string _pastaOrigem = string.Empty;
 
         public Home()
         {
@@ -37,8 +38,8 @@ namespace ConverteFotos
                 if (EhImagem(arquivo))
                 {
                     using Image imagemOriginal = Image.FromFile(arquivo);
-                    int novaLargura = 800;
-                    int novaAltura = 1200;
+                    int novaLargura = Convert.ToInt32(txtLargura.Text);
+                    int novaAltura = Convert.ToInt32(txtAltura.Text);
 
                     bool ehParaManterProporcao = chkMantenhaProporcao.Checked;
 
@@ -100,18 +101,23 @@ namespace ConverteFotos
                 try
                 {
                     var sr = new StreamReader(openFileDialog.FileName);
-                    SetTextoImagens(sr.ReadToEnd());
+                    txtImagens.Text = sr.ReadToEnd();
                 }
                 catch (SecurityException ex)
                 {
-                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
-                    $"Details:\n\n{ex.StackTrace}");
+                    MessageBox.Show(@$"Erro ao selecionar imagem {ex.Message}
+                    Detalhe:
+                    {ex.StackTrace}");
                 }
             }
         }
 
-        private void SetTextoImagens(string textoImagens) => txtImagens.Text = textoImagens;
-
         private void BtnFechar_Click(object sender, EventArgs e) => Close();
+
+        private void ChkMantenhaProporcao_CheckStateChanged(object sender, EventArgs e)
+        {
+            txtAltura.Enabled = !chkMantenhaProporcao.Checked;
+            txtLargura.Enabled = !chkMantenhaProporcao.Checked;
+        }
     }
 }

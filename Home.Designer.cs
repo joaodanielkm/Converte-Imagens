@@ -35,17 +35,24 @@
             btnSelecioneImagens = new Button();
             txtImagens = new TextBox();
             btnFechar = new Button();
+            txtAltura = new TextBox();
+            txtLargura = new TextBox();
+            label2 = new Label();
+            label3 = new Label();
             SuspendLayout();
             // 
             // chkMantenhaProporcao
             // 
             chkMantenhaProporcao.AutoSize = true;
-            chkMantenhaProporcao.Location = new Point(335, 272);
+            chkMantenhaProporcao.Checked = true;
+            chkMantenhaProporcao.CheckState = CheckState.Checked;
+            chkMantenhaProporcao.Location = new Point(335, 176);
             chkMantenhaProporcao.Name = "chkMantenhaProporcao";
             chkMantenhaProporcao.Size = new Size(122, 19);
             chkMantenhaProporcao.TabIndex = 0;
             chkMantenhaProporcao.Text = "Manter proporção";
             chkMantenhaProporcao.UseVisualStyleBackColor = true;
+            chkMantenhaProporcao.CheckStateChanged += ChkMantenhaProporcao_CheckStateChanged;
             // 
             // btnConvertaFotos
             // 
@@ -59,7 +66,7 @@
             // 
             // txtQualidade
             // 
-            txtQualidade.Location = new Point(335, 233);
+            txtQualidade.Location = new Point(400, 271);
             txtQualidade.Name = "txtQualidade";
             txtQualidade.Size = new Size(51, 23);
             txtQualidade.TabIndex = 2;
@@ -69,7 +76,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(392, 236);
+            label1.Location = new Point(332, 274);
             label1.Name = "label1";
             label1.Size = new Size(61, 15);
             label1.TabIndex = 3;
@@ -104,6 +111,44 @@
             btnFechar.UseVisualStyleBackColor = true;
             btnFechar.Click += BtnFechar_Click;
             // 
+            // txtAltura
+            // 
+            txtAltura.Enabled = false;
+            txtAltura.Location = new Point(402, 201);
+            txtAltura.Name = "txtAltura";
+            txtAltura.Size = new Size(51, 23);
+            txtAltura.TabIndex = 8;
+            txtAltura.Text = "1200";
+            txtAltura.TextAlign = HorizontalAlignment.Center;
+            // 
+            // txtLargura
+            // 
+            txtLargura.Enabled = false;
+            txtLargura.Location = new Point(402, 233);
+            txtLargura.Name = "txtLargura";
+            txtLargura.Size = new Size(51, 23);
+            txtLargura.TabIndex = 9;
+            txtLargura.Text = "800";
+            txtLargura.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(335, 207);
+            label2.Name = "label2";
+            label2.Size = new Size(39, 15);
+            label2.TabIndex = 10;
+            label2.Text = "Altura";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(332, 236);
+            label3.Name = "label3";
+            label3.Size = new Size(47, 15);
+            label3.TabIndex = 11;
+            label3.Text = "Largura";
+            // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -111,6 +156,10 @@
             AutoSize = true;
             ClientSize = new Size(463, 364);
             ControlBox = false;
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(txtLargura);
+            Controls.Add(txtAltura);
             Controls.Add(btnFechar);
             Controls.Add(txtImagens);
             Controls.Add(btnSelecioneImagens);
@@ -134,5 +183,9 @@
         private Button btnSelecioneImagens;
         private TextBox txtImagens;
         private Button btnFechar;
+        private TextBox txtAltura;
+        private TextBox txtLargura;
+        private Label label2;
+        private Label label3;
     }
 }
