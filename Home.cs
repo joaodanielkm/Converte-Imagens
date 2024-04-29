@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Security;
 
 namespace ConverteFotos
@@ -26,19 +25,18 @@ namespace ConverteFotos
             {
                 try
                 {
-                    long tamanhoTotalBytes = 0;
-                    txtImagens.Clear();
+                    LimpeCamposParaSelecaoDeImagens();
                     System.Text.StringBuilder sb = new();
                     _pastaOrigem = Path.GetDirectoryName(_openFileDialog?.FileName);
 
                     foreach (string imagem in _openFileDialog.SafeFileNames)
                     {
                         sb.AppendLine(imagem);
-                        tamanhoTotalBytes += new FileInfo(@$"{_pastaOrigem}\{imagem}").Length;
+                        _tamanhoTotalMB += new FileInfo(@$"{_pastaOrigem}\{imagem}").Length;
                     }
 
                     txtImagens.Text = sb.ToString();
-                    lbTamanhoTotal.Text = $"Tamanho total: {ObtenhaStringTamanhoTotal(ObtenhaTamanhoTotal(tamanhoTotalBytes))}";
+                    lbTamanhoTotal.Text = $"Tamanho total: {ObtenhaStringTamanhoTotal(_tamanhoTotalMB)}";
                 }
                 catch (SecurityException ex)
                 {
@@ -47,6 +45,13 @@ namespace ConverteFotos
                     {ex.StackTrace}");
                 }
             }
+        }
+
+        private void LimpeCamposParaSelecaoDeImagens()
+        {
+            txtImagens.Clear();
+            lbTamanhoTotal.Text = "";
+            _tamanhoTotalMB = 0;
         }
 
         private void ConvertaImagens()
@@ -97,16 +102,21 @@ namespace ConverteFotos
                 }
                 tamanhoTotalFinal += new FileInfo(@$"{pastaDestino}\{arquivo}").Length;
             }
-            double diferencaoTotal = (_tamanhoTotalMB - ObtenhaTamanhoTotal(tamanhoTotalFinal));
-
-            MessageBox.Show($"Imagens convertidas!\n Ganho de {ObtenhaStringTamanhoTotal(diferencaoTotal)}");
+            MessageBox.Show($"Imagens convertidas!\n Ganho de {ObtenhaStringTamanhoTotal(_tamanhoTotalMB - tamanhoTotalFinal)}");
             LimpeCampos();
             Process.Start("explorer.exe", pastaDestino);
         }
 
-        private static double ObtenhaTamanhoTotal(double tamanho) => tamanho / (1024.0 * 1024.0);
+        private static string ObtenhaStringTamanhoTotal(double tamanho)
+        {
+            tamanho = Math.Round(tamanho / 1024.0);
 
-        private static string ObtenhaStringTamanhoTotal(double tamanho) => tamanho < 1 ? $"{(int)(tamanho * 1024.0)} KB" : $"{tamanho:F2} MB";
+            if (tamanho < 1024)
+                return $"{tamanho:F0} KB";
+
+            double tamanhoMB = tamanho / 1024.0;
+            return $"{tamanhoMB:F2} MB";
+        }
 
         private void LimpeCampos()
         {
