@@ -59,10 +59,10 @@
             // 
             // btnConvertaFotos
             // 
-            btnConvertaFotos.BackColor = Color.FromArgb(128, 255, 128);
-            btnConvertaFotos.Location = new Point(332, 180);
+            btnConvertaFotos.BackColor = Color.FromArgb(192, 255, 192);
+            btnConvertaFotos.Location = new Point(335, 180);
             btnConvertaFotos.Name = "btnConvertaFotos";
-            btnConvertaFotos.Size = new Size(121, 36);
+            btnConvertaFotos.Size = new Size(127, 36);
             btnConvertaFotos.TabIndex = 5;
             btnConvertaFotos.Text = "Converter";
             btnConvertaFotos.UseVisualStyleBackColor = false;
@@ -70,7 +70,7 @@
             // 
             // txtQualidade
             // 
-            txtQualidade.Location = new Point(402, 151);
+            txtQualidade.Location = new Point(411, 151);
             txtQualidade.Name = "txtQualidade";
             txtQualidade.Size = new Size(51, 23);
             txtQualidade.TabIndex = 4;
@@ -82,15 +82,15 @@
             label1.AutoSize = true;
             label1.Location = new Point(332, 154);
             label1.Name = "label1";
-            label1.Size = new Size(61, 15);
+            label1.Size = new Size(74, 15);
             label1.TabIndex = 3;
-            label1.Text = "Qualidade";
+            label1.Text = "Qualidade %";
             // 
             // btnSelecioneImagens
             // 
             btnSelecioneImagens.Location = new Point(332, 12);
             btnSelecioneImagens.Name = "btnSelecioneImagens";
-            btnSelecioneImagens.Size = new Size(121, 36);
+            btnSelecioneImagens.Size = new Size(130, 36);
             btnSelecioneImagens.TabIndex = 0;
             btnSelecioneImagens.Text = "Selecione";
             btnSelecioneImagens.UseVisualStyleBackColor = true;
@@ -107,10 +107,10 @@
             // 
             // btnFechar
             // 
-            btnFechar.BackColor = Color.Red;
-            btnFechar.Location = new Point(330, 307);
+            btnFechar.BackColor = Color.LightCoral;
+            btnFechar.Location = new Point(335, 307);
             btnFechar.Name = "btnFechar";
-            btnFechar.Size = new Size(121, 36);
+            btnFechar.Size = new Size(125, 36);
             btnFechar.TabIndex = 7;
             btnFechar.Text = "Fechar";
             btnFechar.UseVisualStyleBackColor = false;
@@ -119,7 +119,7 @@
             // txtAltura
             // 
             txtAltura.Enabled = false;
-            txtAltura.Location = new Point(402, 81);
+            txtAltura.Location = new Point(411, 81);
             txtAltura.Name = "txtAltura";
             txtAltura.Size = new Size(51, 23);
             txtAltura.TabIndex = 2;
@@ -129,7 +129,7 @@
             // txtLargura
             // 
             txtLargura.Enabled = false;
-            txtLargura.Location = new Point(402, 113);
+            txtLargura.Location = new Point(411, 113);
             txtLargura.Name = "txtLargura";
             txtLargura.Size = new Size(51, 23);
             txtLargura.TabIndex = 3;
@@ -156,10 +156,10 @@
             // 
             // btnLimpar
             // 
-            btnLimpar.BackColor = Color.FromArgb(255, 255, 128);
-            btnLimpar.Location = new Point(330, 265);
+            btnLimpar.BackColor = Color.FromArgb(255, 255, 192);
+            btnLimpar.Location = new Point(335, 265);
             btnLimpar.Name = "btnLimpar";
-            btnLimpar.Size = new Size(121, 36);
+            btnLimpar.Size = new Size(125, 36);
             btnLimpar.TabIndex = 6;
             btnLimpar.Text = "Limpar";
             btnLimpar.UseVisualStyleBackColor = false;
@@ -177,7 +177,7 @@
             // 
             prossBar.Location = new Point(10, 349);
             prossBar.Name = "prossBar";
-            prossBar.Size = new Size(441, 23);
+            prossBar.Size = new Size(447, 23);
             prossBar.TabIndex = 15;
             // 
             // Converter
@@ -185,7 +185,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(463, 416);
+            ClientSize = new Size(472, 416);
             ControlBox = false;
             Controls.Add(prossBar);
             Controls.Add(lbTamanhoTotal);
@@ -203,7 +203,7 @@
             Controls.Add(chkMantenhaProporcao);
             Name = "Converter";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "home";
+            Text = "Converte Imagens";
             ResumeLayout(false);
             PerformLayout();
         }
