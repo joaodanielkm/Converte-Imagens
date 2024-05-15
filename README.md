@@ -1,1 +1,3 @@
-# ConverteFotos
+# Converte Fotos
+
+Conversor de fotos.
