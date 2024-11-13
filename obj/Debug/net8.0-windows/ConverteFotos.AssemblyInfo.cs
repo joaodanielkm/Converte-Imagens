@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConverteFotos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8af2f907c52bab4c56912f10ac62b8c566ebb2ed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9846bdb1d67899d553272529415de8674edb623b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConverteFotos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConverteFotos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

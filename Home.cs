@@ -59,6 +59,8 @@ public partial class Converter : Form
 
     private void ConvertaImagens()
     {
+        const long qualidadePadrao = 90L;
+
         if (string.IsNullOrEmpty(txtImagens.Text))
         {
             MessageBox.Show("Selecione ao menos uma imagem!");
@@ -76,7 +78,7 @@ public partial class Converter : Form
         string[] arquivos = _openFileDialog.SafeFileNames;
         prossBar.Maximum = arquivos.Length;
 
-        foreach (var (arquivo, arquivoOrigem) in from string? arquivo in arquivos
+        foreach ((string arquivo, string arquivoOrigem) in from string arquivo in arquivos
                                                  let arquivoOrigem = @$"{_pastaOrigem}\{arquivo}"
                                                  select (arquivo, arquivoOrigem))
         {
@@ -99,7 +101,7 @@ public partial class Converter : Form
                 using Image novaImagem = new Bitmap(imagemOriginal, novaLargura, novaAltura);
                 EncoderParameters parametros = new(count: 1);
 
-                long qualidade = string.IsNullOrEmpty(txtQualidade.Text) ? 90L : Convert.ToInt32(txtQualidade.Text);
+                long qualidade = string.IsNullOrEmpty(txtQualidade.Text) ? qualidadePadrao : Convert.ToInt32(txtQualidade.Text);
 
                 parametros.Param[0] = new EncoderParameter(Encoder.Quality, qualidade);
                 ImageCodecInfo codecInfo = ObtenhaCodec(Path.GetExtension(arquivoOrigem));
@@ -154,7 +156,8 @@ public partial class Converter : Form
     private static ImageCodecInfo ObtenhaCodec(string extension)
     {
         foreach (ImageCodecInfo codec in from ImageCodecInfo codec in ImageCodecInfo.GetImageEncoders()
-                                         where codec?.FilenameExtension is not null && codec.FilenameExtension.Contains(extension, StringComparison.CurrentCultureIgnoreCase)
+                                         where codec?.FilenameExtension is not null 
+                                         && codec.FilenameExtension.Contains(extension, StringComparison.CurrentCultureIgnoreCase)
                                          select codec)
         {
             return codec;
@@ -163,13 +166,8 @@ public partial class Converter : Form
         return null;
     }
 
-    private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
-    {
-        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-        {
-            e.Handled = true;
-        }
-    }
+    private void TextBox_KeyPress(object sender, KeyPressEventArgs e) => 
+        e.Handled = !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar);
 
     private void BtnConvertaFotos_Click(object sender, EventArgs e) => ConvertaImagens();
 
